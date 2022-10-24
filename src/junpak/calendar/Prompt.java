@@ -1,7 +1,6 @@
 package junpak.calendar;
 
 import java.text.ParseException;
-import java.util.Objects;
 import java.util.Scanner;
 
 public class Prompt {
@@ -67,14 +66,13 @@ public class Prompt {
 		System.out.println("[일정 검색]");
 		System.out.println("날짜를 입력해 주세요. (yyyy-MM-dd)");
 		String date = scanner.next();
-		String plan = null;
-		try {
-			plan = cal.searchPlan(date);
-		} catch (ParseException e) {
-			e.printStackTrace();
-			System.out.println("올바른 값을 입력해주세요.");
+		PlanItem plan;
+		plan = cal.searchPlan(date);
+		if (plan != null) {
+			System.out.println(plan.detail);
+		} else {
+			System.out.println("일정이 없습니다.");
 		}
-		System.out.println(plan);
 	}
 
 	private void cmdRegister(Scanner scanner, Calendar cal) throws ParseException {
@@ -82,15 +80,14 @@ public class Prompt {
 		System.out.println("날짜를 입력해 주세요. (yyyy-MM-dd)");
 		String date = scanner.next();
 		String text = "";
-		System.out.println("일정을 입력해 주세요.");
-		while (true) {
-			String word = scanner.next();
+		String word;
+		System.out.println("일정을 입력해 주세요.(끝문자 ;)");
+		while (!(word = scanner.next()).endsWith(";")) {
 			text += word + " ";
-			if (word.endsWith(";")) {
-				break;
-			}
 		}
-		cal.registerPlan(date, text.toString());
+		word = word.replace(";", "");
+		text += word;
+		cal.registerPlan(date, text);
 	}
 
 	public static void main(String[] args) throws ParseException {

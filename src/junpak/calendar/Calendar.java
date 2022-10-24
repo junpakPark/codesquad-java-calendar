@@ -1,7 +1,6 @@
 package junpak.calendar;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -17,19 +16,19 @@ public class Calendar {
 		return MAX_DAYS[month - 1];
 	}
 
-	private HashMap<Date, String> planMap;
+	private final HashMap<Date, PlanItem> planMap;
 
 	public Calendar() {
-		planMap = new HashMap<Date, String>();
+		planMap = new HashMap<Date, PlanItem>();
 	}
 
 	public void registerPlan(String strDate, String plan) throws ParseException {
-		Date date = new SimpleDateFormat("yyyy-MM-dd").parse(strDate);
-		planMap.put(date, plan);
+		PlanItem p = new PlanItem(strDate, plan);
+		planMap.put(p.getDate(), p);
 	}
 
-	public String searchPlan(String strDate) throws ParseException {
-		Date date = new SimpleDateFormat("yyyy-MM-dd").parse(strDate);
+	public PlanItem searchPlan(String strDate) {
+		Date date = PlanItem.getDateFromString(strDate);
 		return planMap.get(date);
 	}
 
