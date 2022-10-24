@@ -1,28 +1,52 @@
 package junpak.calendar;
 
+import java.util.Objects;
 import java.util.Scanner;
 
 public class Prompt {
+
+	public int parseDay(String day) {
+		if (Objects.equals(day, "su"))
+			return 0;
+		else if (Objects.equals(day, "mo"))
+			return 1;
+		else if (Objects.equals(day, "tu"))
+			return 2;
+		else if (Objects.equals(day, "we"))
+			return 3;
+		else if (Objects.equals(day, "th"))
+			return 4;
+		else if (Objects.equals(day, "fr"))
+			return 5;
+		else if (Objects.equals(day, "sa"))
+			return 6;
+		else
+			return 0;
+	}
 
 	public void runPrompt() {
 		Scanner scanner = new Scanner(System.in);
 		Calendar cal = new Calendar();
 
 		while (true) {
-			System.out.println("연도를 입력하세요.");
+			System.out.println("연도를 입력하세요.(exit: -1)");
 			System.out.print("Year> ");
 			int year = scanner.nextInt();
+			if (year == -1) {
+				break;
+			}
 			System.out.println("달을 입력하세요.");
 			System.out.print("Month> ");
 			int month = scanner.nextInt();
-			if (month == -1) {
-				break;
-			}
+			System.out.println("첫째날의 요일을 입력하세요.");
+			System.out.print("Day> ");
+			String str_weekday = scanner.next();
+			int weekday = parseDay(str_weekday);
 			if (month > 12 || month < 1) {
 				System.out.println("입력값을 확인해주세요.");
 				continue;
 			}
-			cal.printCalendar(year, month);
+			cal.printCalendar(year, month, weekday);
 		}
 
 		System.out.println("Bye~");
