@@ -1,5 +1,10 @@
 package junpak.calendar;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+
 public class Calendar {
 
 	private static final int[] MAX_DAYS = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
@@ -10,6 +15,22 @@ public class Calendar {
 			return LEAP_MAX_DAYS[month - 1];
 		}
 		return MAX_DAYS[month - 1];
+	}
+
+	private HashMap<Date, String> planMap;
+
+	public Calendar() {
+		planMap = new HashMap<Date, String>();
+	}
+
+	public void registerPlan(String strDate, String plan) throws ParseException {
+		Date date = new SimpleDateFormat("yyyy-MM-dd").parse(strDate);
+		planMap.put(date, plan);
+	}
+
+	public String searchPlan(String strDate) throws ParseException {
+		Date date = new SimpleDateFormat("yyyy-MM-dd").parse(strDate);
+		return planMap.get(date);
 	}
 
 	public boolean isLeapYear(int year) {
