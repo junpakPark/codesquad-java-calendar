@@ -57,7 +57,7 @@ public class Calendar {
 
 	private int getWeekDay(int year, int month) {
 		final int STANDARD_YEAR = 1970;
-		final int STANDARD_WEEKDAY = 3; // 1970/1/1 Thursday
+		final int STANDARD_WEEKDAY = 4; // 1970/1/1 Thursday
 		int count = 0;
 
 		for (int i = STANDARD_YEAR; i < year; i++) {
@@ -69,8 +69,6 @@ public class Calendar {
 			int delta = getMaxDaysOfMonth(year, i);
 			count += delta;
 		}
-
-		count += 1;
 
 		return (count + STANDARD_WEEKDAY) % 7;
 	}

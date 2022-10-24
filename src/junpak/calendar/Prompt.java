@@ -5,48 +5,67 @@ import java.util.Scanner;
 
 public class Prompt {
 
-	public int parseDay(String day) {
-		if (Objects.equals(day, "su"))
-			return 0;
-		else if (Objects.equals(day, "mo"))
-			return 1;
-		else if (Objects.equals(day, "tu"))
-			return 2;
-		else if (Objects.equals(day, "we"))
-			return 3;
-		else if (Objects.equals(day, "th"))
-			return 4;
-		else if (Objects.equals(day, "fr"))
-			return 5;
-		else if (Objects.equals(day, "sa"))
-			return 6;
-		else
-			return 0;
+	public void printMenu() {
+		System.out.println("+----------------------+");
+		System.out.println("| 1. 일정 등록");
+		System.out.println("| 2. 일정 검색");
+		System.out.println("| 3. 달력 보기");
+		System.out.println("| h. 도움말 q. 종료");
+		System.out.println("+----------------------+");
 	}
 
 	public void runPrompt() {
+		printMenu();
 		Scanner scanner = new Scanner(System.in);
 		Calendar cal = new Calendar();
 
+		label:
 		while (true) {
-			System.out.println("연도를 입력하세요.(exit: -1)");
-			System.out.print("Year> ");
-			int year = scanner.nextInt();
-			if (year == -1) {
-				break;
+			System.out.println("명령 (1, 2, 3, h, q)");
+			String cmd = scanner.next();
+			switch (cmd) {
+				case "1":
+					cmdRegister();
+					break;
+				case "2":
+					cmdPlan();
+					break;
+				case "3":
+					cmdCalendar(scanner, cal);
+					break;
+				case "h":
+					printMenu();
+					break;
+				case "q":
+					break label;
 			}
-			System.out.println("달을 입력하세요.");
-			System.out.print("Month> ");
-			int month = scanner.nextInt();
-			if (month > 12 || month < 1) {
-				System.out.println("입력값을 확인해주세요.");
-				continue;
-			}
-			cal.printCalendar(year, month);
+
 		}
 
-		System.out.println("Bye~");
+		System.out.println("Thank you, Bye~");
 		scanner.close();
+	}
+
+	private void cmdCalendar(Scanner scanner, Calendar cal) {
+		System.out.println("연도를 입력하세요.");
+		System.out.print("Year> ");
+		int year = scanner.nextInt();
+
+		System.out.println("달을 입력하세요.");
+		System.out.print("Month> ");
+		int month = scanner.nextInt();
+
+		if (month > 12 || month < 1) {
+			System.out.println("입력값을 확인해주세요.");
+			return;
+		}
+		cal.printCalendar(year, month);
+	}
+
+	private void cmdPlan() {
+	}
+
+	private void cmdRegister() {
 	}
 
 	public static void main(String[] args) {
