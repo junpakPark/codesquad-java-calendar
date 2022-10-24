@@ -1,13 +1,42 @@
 package junpak.calendar;
 
-import java.text.ParseException;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Scanner;
 
 public class Calendar {
 
 	private static final int[] MAX_DAYS = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 	private static final int[] LEAP_MAX_DAYS = {31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+	private static final String SAVE_FILE = "calendar.dat";
+	private final HashMap<Date, PlanItem> planMap;
+
+	public Calendar() {
+		planMap = new HashMap<Date, PlanItem>();
+		File file = new File(SAVE_FILE);
+		if (!(file.exists())) {
+			System.err.println("no save file");
+			return;
+		}
+		try {
+			Scanner scanner = new Scanner(file);
+			while (scanner.hasNext()) {
+				String line = scanner.nextLine();
+				String[] words = line.split(",");
+				String date = words[0];
+				String detail = words[1].replaceAll("\"", "");
+				PlanItem planItem = new PlanItem(date, detail);
+				planMap.put(planItem.getDate(), planItem);
+			}
+			scanner.close();
+		} catch (FileNotFoundException e) {
+			throw new RuntimeException(e);
+		}
+	}
 
 	public int getMaxDaysOfMonth(int year, int month) {
 		if (isLeapYear(year)) {
@@ -16,15 +45,19 @@ public class Calendar {
 		return MAX_DAYS[month - 1];
 	}
 
-	private final HashMap<Date, PlanItem> planMap;
+	public void registerPlan(String strDate, String plan) {
+		PlanItem planItem = new PlanItem(strDate, plan);
+		planMap.put(planItem.getDate(), planItem);
 
-	public Calendar() {
-		planMap = new HashMap<Date, PlanItem>();
-	}
-
-	public void registerPlan(String strDate, String plan) throws ParseException {
-		PlanItem p = new PlanItem(strDate, plan);
-		planMap.put(p.getDate(), p);
+		File file = new File(SAVE_FILE);
+		String item = planItem.saveString();
+		try {
+			FileWriter fileWriter = new FileWriter(file, true);
+			fileWriter.write(item);
+			fileWriter.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public PlanItem searchPlan(String strDate) {
