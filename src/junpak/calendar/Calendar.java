@@ -5,6 +5,7 @@ import java.util.Scanner;
 public class Calendar {
 
 	private static final int[] MAX_DAYS = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+
 	public int getMaxDaysOfMonth(int month) {
 		return MAX_DAYS[month - 1];
 	}
@@ -20,24 +21,53 @@ public class Calendar {
 
 	public static void main(String[] args) {
 
-		//나의 풀이
-		int[] monthLength = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
-		System.out.println("달을 입력하세요.");
+		//나의 풀이 (입력월의 최대 일수 출력)
+		// int[] monthLength = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+		// System.out.println("달을 입력하세요.");
+		// Scanner scanner = new Scanner(System.in);
+		// int month = scanner.nextInt();
+		// if (month < 1 || month > 12) {
+		// 	System.out.println("입력한 값을 확인해 주세요.");
+		// } else {
+		// 	System.out.printf("%d월은 %d 일까지 있습니다. %n", month, monthLength[month - 1]);
+		// }
+
+		//강의 설명 (입력월의 최대 일수 출력)
+		// Scanner scanner = new Scanner(System.in);
+		// Calendar cal = new Calendar();
+		// System.out.println("달을 입력하세요.");
+		// int month = scanner.nextInt();
+		// System.out.printf("%d월은 %d 일까지 있습니다. \n", month, cal.getMaxDaysOfMonth(month));
+		// cal.printSampleCalendar();
+		// scanner.close();
+
+		//나의 풀이 (n번 반복 가능하도록 프로그램 변경)
+		// Scanner scanner = new Scanner(System.in);
+		// System.out.println("반복 횟수를 입력하세요.");
+		// int repeat = scanner.nextInt();
+		// Calendar cal = new Calendar();
+		// System.out.println("달을 입력하세요.");
+		// for (int i = 0; i < repeat ; i++) {
+		// 	int month = scanner.nextInt();
+		// 	System.out.printf("%d월은 %d 일까지 있습니다. \n", month, cal.getMaxDaysOfMonth(month));
+		// }
+		// cal.printSampleCalendar();
+		// scanner.close();
+
+		//강의 설명 (n번 반복 가능하도록 프로그램 변경)
 		Scanner scanner = new Scanner(System.in);
-		int month = scanner.nextInt();
-		if (month < 1 || month > 12) {
-			System.out.println("입력한 값을 확인해 주세요.");
-		} else {
-			System.out.printf("%d월은 %d 일까지 있습니다. %n", month, monthLength[month - 1]);
+		Calendar cal = new Calendar();
+
+		System.out.println("반복 횟수를 입력하세요.");
+		int repeat = scanner.nextInt();
+
+		for (int i = 0; i < repeat; i++) {
+			System.out.println("달을 입력하세요.");
+			int month = scanner.nextInt();
+			System.out.printf("%d월은 %d 일까지 있습니다. \n", month, cal.getMaxDaysOfMonth(month));
 		}
 
-		//강의 설명
-		Scanner scanner1 = new Scanner(System.in);
-		Calendar cal = new Calendar();
-		System.out.println("달을 입력하세요.");
-		int month1 = scanner.nextInt();
-		System.out.printf("%d월은 %d 일까지 있습니다. \n", month1, cal.getMaxDaysOfMonth(month1));
-		cal.printSampleCalendar();
-		scanner1.close();
+		System.out.println("Bye~");
+		scanner.close();
 	}
 }
