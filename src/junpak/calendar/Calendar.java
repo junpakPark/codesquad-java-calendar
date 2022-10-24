@@ -16,10 +16,13 @@ public class Calendar {
 		return year % 4 == 0 && (year % 100 != 0 || year % 400 == 0);
 	}
 
-	public void printCalendar(int year, int month, int weekday) {
+	public void printCalendar(int year, int month) {
 		System.out.printf("    <<%4d년 %3d월>>%n", year, month);
 		System.out.println(" SU MO TU WE TH FR SA");
 		System.out.println("---------------------");
+
+		//get weekday automatically
+		int weekday = getWeekDay(year, month);
 
 		//print blank space
 		for (int i = 0; i < weekday; i++) {
@@ -50,6 +53,26 @@ public class Calendar {
 		// System.out.println("8  9  10 11 12 13 14");
 		// System.out.println("15 16 17 18 19 20 21");
 		// System.out.println("22 23 24 25 26 27 28");
+	}
+
+	private int getWeekDay(int year, int month) {
+		final int STANDARD_YEAR = 1970;
+		final int STANDARD_WEEKDAY = 3; // 1970/1/1 Thursday
+		int count = 0;
+
+		for (int i = STANDARD_YEAR; i < year; i++) {
+			int delta = isLeapYear(i) ? 366 : 365;
+			count += delta;
+		}
+
+		for (int i = 1; i < month; i++) {
+			int delta = getMaxDaysOfMonth(year, i);
+			count += delta;
+		}
+
+		count += 1;
+
+		return (count + STANDARD_WEEKDAY) % 7;
 	}
 
 }

@@ -38,15 +38,11 @@ public class Prompt {
 			System.out.println("달을 입력하세요.");
 			System.out.print("Month> ");
 			int month = scanner.nextInt();
-			System.out.println("첫째날의 요일을 입력하세요.");
-			System.out.print("Day> ");
-			String str_weekday = scanner.next();
-			int weekday = parseDay(str_weekday);
 			if (month > 12 || month < 1) {
 				System.out.println("입력값을 확인해주세요.");
 				continue;
 			}
-			cal.printCalendar(year, month, weekday);
+			cal.printCalendar(year, month);
 		}
 
 		System.out.println("Bye~");
